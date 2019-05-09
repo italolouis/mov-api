@@ -1,12 +1,12 @@
-CREATE TABLE pessoa(
+CREATE TABLE usuario(
 	codusu BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
     dtnascimento DATE,
     genero CHAR(1),
     altura DECIMAL(10,2),
     telefone VARCHAR(16),
-    email VARCHAR(50),
-    senha VARCHAR(10),
+    email VARCHAR(50) NOT NULL UNIQUE,
+    senha VARCHAR(10) NOT NULL,
     cep VARCHAR(30),
     logradouro VARCHAR(30),
     complemento VARCHAR(30),

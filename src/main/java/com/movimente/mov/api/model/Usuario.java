@@ -2,6 +2,8 @@ package com.movimente.mov.api.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,8 +15,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "Pessoa")
-public class Pessoa {
+@Table(name = "usuario")
+public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +31,7 @@ public class Pessoa {
 	@Lob
 	private byte[] foto;
 	@NotNull
+	@Column(unique=true)
 	private String email;
 	@NotNull
 	private String senha;
@@ -122,7 +125,7 @@ public class Pessoa {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pessoa other = (Pessoa) obj;
+		Usuario other = (Usuario) obj;
 		if (codusu == null) {
 			if (other.codusu != null)
 				return false;
