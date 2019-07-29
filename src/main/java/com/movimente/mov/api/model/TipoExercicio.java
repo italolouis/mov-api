@@ -2,35 +2,34 @@ package com.movimente.mov.api.model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "exercicio")
-public class Exercicio {
+@Table(name = "tipoexercicio")
+public class TipoExercicio{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cod;
 	
-	private Long exerciciocod;
-	
-	/*@JsonIgnore
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "exerciciocod")
-	private TipoExercicio tipoexercicio;*/
+	@Column(name = "nome")
+	private String nome;
+	private String instrucao;
 	
 	@ManyToMany
-    @JoinTable(name = "exercicio_serie", joinColumns = @JoinColumn(name = "exerciciocod"), inverseJoinColumns = @JoinColumn(name = "seriecod"))
-    private Set<Serie> series;
+    @JoinTable(name = "tipoexercicio_categoria", joinColumns = @JoinColumn(name = "tipexercicio"), inverseJoinColumns = @JoinColumn(name = "categoriacod"))
+    private Set<Categoria> categorias;
 	
-	private Long descanso;
+	@Lob
+	private byte[] image;
 
 	public Long getCod() {
 		return cod;
@@ -40,30 +39,38 @@ public class Exercicio {
 		this.cod = cod;
 	}
 
-	public Long getExerciciocod() {
-		return exerciciocod;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setExerciciocod(Long exerciciocod) {
-		this.exerciciocod = exerciciocod;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public Set<Serie> getSeries() {
-		return series;
+	public String getInstrucao() {
+		return instrucao;
 	}
 
-	public void setSeries(Set<Serie> series) {
-		this.series = series;
+	public void setInstrucao(String instrucao) {
+		this.instrucao = instrucao;
 	}
 	
-	public Long getDescanso() {
-		return descanso;
+	public Set<Categoria> getCategorias() {
+		return categorias;
 	}
 
-	public void setDescanso(Long descanso) {
-		this.descanso = descanso;
+	public void setCategorias(Set<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,7 +87,7 @@ public class Exercicio {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Exercicio other = (Exercicio) obj;
+		TipoExercicio other = (TipoExercicio) obj;
 		if (cod == null) {
 			if (other.cod != null)
 				return false;
@@ -88,4 +95,5 @@ public class Exercicio {
 			return false;
 		return true;
 	}
+	
 }

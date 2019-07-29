@@ -9,28 +9,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "exercicio")
-public class Exercicio {
+@Table(name = "treino")
+public class Treino {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cod;
+	private String dia;
 	
-	private Long exerciciocod;
-	
-	/*@JsonIgnore
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "exerciciocod")
-	private TipoExercicio tipoexercicio;*/
+	@JoinColumn(name = "usuariocod")
+	private Usuario usuario;
 	
 	@ManyToMany
-    @JoinTable(name = "exercicio_serie", joinColumns = @JoinColumn(name = "exerciciocod"), inverseJoinColumns = @JoinColumn(name = "seriecod"))
-    private Set<Serie> series;
-	
-	private Long descanso;
+    @JoinTable(name = "treino_exercicios", joinColumns = @JoinColumn(name = "treinocod"), inverseJoinColumns = @JoinColumn(name = "exercicioscod"))
+    private Set<Exercicio> exercicio;
 
 	public Long getCod() {
 		return cod;
@@ -40,28 +38,28 @@ public class Exercicio {
 		this.cod = cod;
 	}
 
-	public Long getExerciciocod() {
-		return exerciciocod;
+	public String getDia() {
+		return dia;
 	}
 
-	public void setExerciciocod(Long exerciciocod) {
-		this.exerciciocod = exerciciocod;
+	public void setDia(String dia) {
+		this.dia = dia;
 	}
 
-	public Set<Serie> getSeries() {
-		return series;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setSeries(Set<Serie> series) {
-		this.series = series;
-	}
-	
-	public Long getDescanso() {
-		return descanso;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public void setDescanso(Long descanso) {
-		this.descanso = descanso;
+	public Set<Exercicio> getExercicios() {
+		return exercicio;
+	}
+
+	public void setExercicios(Set<Exercicio> exercicio) {
+		this.exercicio = exercicio;
 	}
 
 	@Override
@@ -80,7 +78,7 @@ public class Exercicio {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Exercicio other = (Exercicio) obj;
+		Treino other = (Treino) obj;
 		if (cod == null) {
 			if (other.cod != null)
 				return false;
@@ -88,4 +86,5 @@ public class Exercicio {
 			return false;
 		return true;
 	}
+	
 }

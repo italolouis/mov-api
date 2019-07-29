@@ -17,31 +17,32 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movimente.mov.api.event.RecursoCriadoEvent;
-import com.movimente.mov.api.model.Exercicio;
-import com.movimente.mov.api.service.ExercicioService;
+import com.movimente.mov.api.model.Serie;
+import com.movimente.mov.api.service.SerieService;
 
 @RestController
-@RequestMapping("/exercicios")
-public class ExercicioController {
+@RequestMapping("/serie")
+public class SerieController {
 	@Autowired
-    private ExercicioService exercicioService;
+    private SerieService serieService;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-    public ResponseEntity<?> getExercicios() {
-        List<Exercicio> exercicio = exercicioService.buscarExercicios();
-        return !exercicio.isEmpty() ? ResponseEntity.ok(exercicio) : ResponseEntity.notFound().build();
+    public ResponseEntity<?> buscarSeries() {
+        List<Serie> series = serieService.buscarSerie();
+        return !series.isEmpty() ? ResponseEntity.ok(series) : ResponseEntity.notFound().build();
     }
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Exercicio> criarExercicios(@Valid @RequestBody Exercicio exercicio, HttpServletResponse response) {
-		Exercicio exerciciosSalvo = exercicioService.insereExercicios(exercicio);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, exerciciosSalvo.getCod()));	
+	public ResponseEntity<Serie> criarSerie(@Valid @RequestBody Serie serie, HttpServletResponse response) {
+		Serie serieSalva = serieService.salvarSerie(serie);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(exerciciosSalvo);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, serieSalva.getCod()));	
+		return ResponseEntity.status(HttpStatus.CREATED).body(serieSalva);
+		
 	}
 
 }

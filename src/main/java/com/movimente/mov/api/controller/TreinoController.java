@@ -17,31 +17,32 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movimente.mov.api.event.RecursoCriadoEvent;
-import com.movimente.mov.api.model.Exercicio;
-import com.movimente.mov.api.service.ExercicioService;
+import com.movimente.mov.api.model.Treino;
+import com.movimente.mov.api.service.TreinoService;
 
 @RestController
-@RequestMapping("/exercicios")
-public class ExercicioController {
+@RequestMapping("/treino")
+public class TreinoController {
 	@Autowired
-    private ExercicioService exercicioService;
+    private TreinoService treinoService;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-    public ResponseEntity<?> getExercicios() {
-        List<Exercicio> exercicio = exercicioService.buscarExercicios();
-        return !exercicio.isEmpty() ? ResponseEntity.ok(exercicio) : ResponseEntity.notFound().build();
+    public ResponseEntity<?> buscarTreino() {
+        List<Treino> treino = treinoService.buscarTreino();
+        return !treino.isEmpty() ? ResponseEntity.ok(treino) : ResponseEntity.notFound().build();
     }
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Exercicio> criarExercicios(@Valid @RequestBody Exercicio exercicio, HttpServletResponse response) {
-		Exercicio exerciciosSalvo = exercicioService.insereExercicios(exercicio);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, exerciciosSalvo.getCod()));	
+	public ResponseEntity<Treino> criarTreino(@Valid @RequestBody Treino treino, HttpServletResponse response) {
+		Treino treinoSalvo = treinoService.insereTreino(treino);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, treinoSalvo.getCod()));	
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(exerciciosSalvo);
+		return ResponseEntity.status(HttpStatus.CREATED).body(treinoSalvo);
 	}
+
 
 }

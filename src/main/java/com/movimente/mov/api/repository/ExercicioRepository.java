@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.movimente.mov.api.model.Exercicio;
 
-public interface ExercicioRepository  extends JpaRepository<Exercicio, Long>{
+public interface ExercicioRepository extends JpaRepository<Exercicio, Long>{
 
 }
