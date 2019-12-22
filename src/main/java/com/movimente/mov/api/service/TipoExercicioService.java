@@ -17,5 +17,9 @@ public class TipoExercicioService {
 	public List<TipoExercicio> buscarExercicios(Categoria categoria) {
         return exercicioService.findByAssociatedWithCategory(categoria.getCod());
     }
+
+	public TipoExercicio insereExercicios(TipoExercicio tipoExercicio) {
+		return exercicioService.save(tipoExercicio);
+	}
 	
 }
